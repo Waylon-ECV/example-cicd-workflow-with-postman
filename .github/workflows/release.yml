@@ -62,6 +62,19 @@ jobs:
         working-directory: './starter-workflows'
         run: |-
           git status
+  
+  automated-api-tests:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Install Postman CLI
+          run: |
+            curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+        - name: Login to Postman CLI
+          run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+        - name: Run API tests
+          run: |
+            postman collection run "39377448-d66b1bac-15d1-42c6-ab27-37a2a94c7988" -e "37674075-ef4461e5-1d18-438f-afb1-22c12d744850"
 
 # - name: 'Push Branch to Remote'
 #   working-directory: ./starter-workflows
